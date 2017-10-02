@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+@*<h2>Index</h2>*@
+<style>
+    .mainbody {
+        position:absolute;
+        top:0;
+        left:0;
+        z-index:1;
+        opacity:0;
+    }
+    .board {
+        position:absolute;
+        top:0;
+        left:0;
+        z-index:100;
+        width:100%;
+        height:100%;
+        background:#fff;
+    }
+    .zk_top_bar {
+        display: none;
+    }
+</style>
+<div class="mainbody" id="mainbody">
+    @Html.Raw(ViewBag.text)
+</div>
+<div class="board" id="board"></div>
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/jquery.mobile.custom.min.js"></script>
+<script>
+    var height = $(window).height();
+    $(function () {
+        $(".c.pr,.downloal-zaker,.top-liubai,.common_top,.zk_top_bar").remove();
+        $("a").each(function (index, element) {
+            var href = $(element).attr("href");
+            $(element).attr("href", "javascript:void(0);");
+            $(element).click(function () {
+                goto(encodeURI(href));
+                return false;
+            });
+        });
+        setTimeout(function () {
+            $("#board").hide();
+            $("#mainbody").css({ "opacity": "1" });
+        }, 500);
+
+        $("body").css({ "overflow": "hidden" });
+        $(document).click(function () {
+            var top = $("body").scrollTop();
+            $("#mainbody").css({ "opacity": "0" });
+            setTimeout(function () {
+                //$("#board").hide();
+                $("#mainbody").css({ "opacity": "1" });
+            }, 500);
+            $("body").scrollTop(top + height);
+        });
+    });
+
+    function goto(url) {
+        window.location.assign("/Index?uri=" + url)
+    }
+    
+</script>
