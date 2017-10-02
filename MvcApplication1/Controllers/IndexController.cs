@@ -28,7 +28,14 @@ namespace MvcApplication1.Controllers
             }
             else
             {
-                path = "http:" + uri;
+                if (uri.IndexOf("http")!=-1)
+                {
+                    path = uri;
+                }
+                else
+                {
+                    path = "http:" + uri;
+                }
             }
             HttpClient hc = new HttpClient();
             var content = hc.GetAsync(path);
